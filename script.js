@@ -75,3 +75,16 @@ document.querySelectorAll('.portfolio-item:not(.placeholder)').forEach(item => {
         console.log('Portfolio item clicked');
     });
 });
+
+// Before/After Slider
+const slider = document.getElementById('beforeAfterSlider');
+const afterImage = document.querySelector('.after-image');
+const sliderButton = document.querySelector('.slider-button');
+
+if (slider && afterImage && sliderButton) {
+    slider.addEventListener('input', (e) => {
+        const value = e.target.value;
+        afterImage.style.clipPath = `inset(0 ${100 - value}% 0 0)`;
+        sliderButton.style.left = `${value}%`;
+    });
+}
