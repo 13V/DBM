@@ -81,10 +81,26 @@ const slider = document.getElementById('beforeAfterSlider');
 const afterImage = document.querySelector('.after-image');
 const sliderButton = document.querySelector('.slider-button');
 
-if (slider && afterImage && sliderButton) {
-    slider.addEventListener('input', (e) => {
-        const value = e.target.value;
+function updateSlider(value) {
+    if (afterImage && sliderButton) {
         afterImage.style.clipPath = `inset(0 ${100 - value}% 0 0)`;
         sliderButton.style.left = `${value}%`;
+    }
+}
+
+if (slider && afterImage && sliderButton) {
+    // Reset to default position
+    updateSlider(50);
+
+    slider.addEventListener('input', (e) => {
+        updateSlider(e.target.value);
+    });
+
+    // Fix for Safari - reset slider when page is loaded from cache
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            slider.value = 50;
+            updateSlider(50);
+        }
     });
 }
